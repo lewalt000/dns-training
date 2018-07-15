@@ -1,2 +1,13 @@
 #!/bin/sh
-az container create --resource-group dns-container-service --name bind --image dnstraining.azurecr.io/bind:9.9.4 --cpu 1 --memory 1 --registry-username dnsTraining --registry-password "XpZokru/nu72aQTMRte0cb0wr6YIxlRJ" --dns-name-label nameserver1 --ports 53 --protocol UDP
+if [ "$#" -ne 1 ]; then
+	echo "Usage ./deploy.sh <version> Example ./deploy.sh 003"
+else
+  # push new docker container to Azure container registry
+	az acr login --name dnsTraining
+	docker tag bind dnstraining.azurecr.io/bind:$1
+	docker push dnstraining.azurecr.io/bind:$1
+
+	# deploy new docker container
+  kubectl set image deployment/ns1-deployment ns1=dnstraining.azurecr.io/bind:$1
+  kubectl set image deployment/ns2-deployment ns2=dnstraining.azurecr.io/bind:$1
+fi
