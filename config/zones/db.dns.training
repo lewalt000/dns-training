@@ -12,9 +12,8 @@ dns.training.    IN      NS      ns1.dns.training.
 dns.training.    IN      NS      ns2.dns.training.
 
 ; A records for name servers
-ns1             IN      CNAME   nameserver1.eastus.azurecontainer.io.
-ns2             IN      CNAME   nameserver2.eastus.azurecontainer.io.
+ns1             IN      A        104.211.30.35
+ns2             IN      A        23.100.25.109
 
 ; Other A records
-@               IN      A       40.76.192.236
 www             IN      CNAME	  dns-training.eastus.azurecontainer.io.
