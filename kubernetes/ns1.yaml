@@ -1,0 +1,36 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: ns1-deployment
+  labels:
+    app: bind
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ns1
+  template:
+    metadata:
+      labels:
+        app: ns1
+    spec:
+      containers:
+      - name: ns1
+        image: dnstraining.azurecr.io/bind:001
+        ports:
+        - containerPort: 53
+      imagePullSecrets:
+      - name: container.registry
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ns1-service
+spec:
+  type: LoadBalancer
+  ports:
+  - protocol: UDP
+    port: 53
+  selector:
+    app: ns1
