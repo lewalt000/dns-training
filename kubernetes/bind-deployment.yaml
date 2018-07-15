@@ -1,0 +1,23 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: bind-deployment
+  labels:
+    app: bind
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bind
+  template:
+    metadata:
+      labels:
+        app: bind
+    spec:
+      containers:
+      - name: bind
+        image: dnstraining.azurecr.io/bind:9.9.4
+        ports:
+        - containerPort: 53
+      imagePullSecrets:
+      - name: container.registry

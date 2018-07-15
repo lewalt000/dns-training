@@ -1,0 +1,20 @@
+$TTL    604800
+@       IN      SOA     ns1.dns.training. admin.dns.training. (
+                     2017071401         ; Serial
+                           1800         ; Refresh
+                            900         ; Retry
+                         604800         ; Expire
+                            300 )       ; Negative Cache TTL
+;
+
+; Name servers
+dns.training.    IN      NS      ns1.dns.training.
+dns.training.    IN      NS      ns2.dns.training.
+
+; A records for name servers
+ns1             IN      CNAME   nameserver1.eastus.azurecontainer.io.
+ns2             IN      CNAME   nameserver2.eastus.azurecontainer.io.
+
+; Other A records
+@               IN      A       40.76.192.236
+www             IN      CNAME	  dns-training.eastus.azurecontainer.io.
