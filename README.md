@@ -6,6 +6,16 @@ that is authoritative for a real domain: dns.training.
 It contains configuration and scripts that can be used to build and deploy bind docker containers
 in Azure.
 
+e.g.
+```
+$ dig dns.training SOA +noall +answer +authority
+
+; <<>> DiG 9.8.3-P1 <<>> dns.training SOA +noall +answer +authority
+;; global options: +cmd
+dns.training.		604743	IN	SOA	ns1.dns.training. admin.dns.training. 2017071401 1800 900 604800 300
+dns.training.		604743	IN	NS	ns2.dns.training.
+dns.training.		604743	IN	NS	ns1.dns.training.
+```
 
 ## Getting Started
 
@@ -23,7 +33,7 @@ There are additional scripts to help with the build process:
 * get shell of locally running container: ```./scripts/shell.sh```
 
 
-### Prerequisites
+## Prerequisites
 
 The scripts assume an Azure account has been setup with the following components created:
 
@@ -40,7 +50,7 @@ They also assume the shell environment has been set up for the Azure account:
 Finally, Docker must be installed on the server where you are building the container images: https://docs.docker.com/install/
 
 
-### Build Docker Image
+## Build Docker Image
 
 To build a new docker image of bind, use the helper script:
 
@@ -58,7 +68,7 @@ dnstraining.azurecr.io/bind            003                 dbcd14c47700        2
 bind                                   latest              dbcd14c47700        24 hours ago        434MB
 ```
 
-### Run Docker Image
+## Run Docker Image
 
 The previously built image can be tested by running it locally:
 ```
@@ -71,7 +81,7 @@ $ dig +short dns.training SOA
 ns1.dns.training. admin.dns.training. 2017071401 1800 900 604800 300
 ```
 
-### Get Container Shell
+## Get Container Shell
 
 If more testing is needed, you can drop into a shell of the bind container:
 ```
@@ -81,7 +91,7 @@ $ ./scripts/shell.sh
 hello!
 ```
 
-### Deploy Container in Azure Kubernetes Service (aks)
+## Deploy Container in Azure Kubernetes Service (aks)
 
 If the bind container seems to be working locally, deploy two bind containers in Azure via kubernetes:
 ```
