@@ -1,6 +1,6 @@
 # DNS Training
 
-The purpose of this project is to test deployment of a bind DNS server with Kubernetes/Docker
+The purpose of this project is to test deployment of bind DNS server with Kubernetes/Docker
 that is authoritative for a real domain: dns.training.
 
 It contains configuration and scripts that can be used to build and deploy bind docker containers
@@ -59,13 +59,12 @@ $ ./scripts/build.sh
 ```
 
 
-Then inspect the new imgage just built:
+Then inspect the imgage just built:
 
 ```
 $ docker images
 REPOSITORY                             TAG                 IMAGE ID            CREATED             SIZE
-dnstraining.azurecr.io/bind            003                 dbcd14c47700        24 hours ago        434MB
-bind                                   latest              dbcd14c47700        24 hours ago        434MB
+bind                                   latest              dbcd14c47700        4 seconds ago       434MB
 ```
 
 ## Run Docker Image
@@ -77,7 +76,7 @@ $ ./scripts/run.sh
 
 There should now be a bind container running locally. Try to query it:
 ```
-$ dig +short dns.training SOA
+$ dig @localhost +short dns.training SOA
 ns1.dns.training. admin.dns.training. 2017071401 1800 900 604800 300
 ```
 
@@ -108,7 +107,7 @@ $ ./scripts/deploy <version number (e.g. 001)>
 ## Configuration
 
 The bind service is configured via ./config/named.conf and ./config/zones/db.dns.training. These configurations
-are built into the container via a declaration in ```./Dockerfile```.
+are built into the container via a declaration the ```Dockerfile```.
 
 When the container is deployed, these configs will be deployed with it.
 
@@ -120,8 +119,8 @@ on the order of 10's of minutes, hours or even days.
 
 ## Future Work
 
-* Use a different docker base image that results in smaller image size (perhaps alpine  project). Currently uses centOS base and resultant bind image is ~400mb
-* Add other DNS use cases to this project (master/slave, hidden master/slave,slave, resursive server, forwarding service)
+* Use a different docker base image that results in smaller image size (perhaps alpine Linux: https://hub.docker.com/_/alpine/). Currently uses centOS base and resultant bind image is ~400mb
+* Add other DNS use cases to this project (master/slave, hidden master/slave,slave, resursive server, forwarding server)
 * Build out an anycast network and use to serve anycast DNS (https://www.linkedin.com/pulse/build-your-own-anycast-network-9-steps-samir-jafferali/, https://en.wikipedia.org/wiki/Anycast#Domain_Name_System)
 
 
